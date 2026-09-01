@@ -1,59 +1,530 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>PaperMind AI</title>
-    <link rel="stylesheet" href="/static/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#101013">
+
+  <title>PaperMind</title>
+
+  <!-- Main stylesheet -->
+  <link rel="stylesheet" href="/static/style.css">
+
+  <!-- KaTeX -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"
+  >
+
+  <script
+    defer
+    src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js">
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  >
 </head>
 
 <body>
-    
-<body class="bg-image"></body>
 
-<div class="layout">
+<div class="app">
 
-    <!-- LEFT MAIN CARD -->
-    <div class="chat-card">
+  <!-- =====================================================
+       SIDEBAR
+       ===================================================== -->
 
-        <div class="header">
-            <h1>📄 PaperMind AI</h1>
-            <p>AI that reads & explains research papers</p>
-        </div>
+  <aside class="sidebar" id="sidebar">
 
-        <!-- CHAT WINDOW -->
-        <div class="chat-window" id="chatBox">
-            <!-- Messages will appear here -->
-        </div>
+    <!-- ================= BRAND ================= -->
 
-        <!-- CONTROLS -->
-        <div class="controls">
+    <div class="brand">
 
-            <div class="upload-row">
-                <input type="file" id="pdfUpload" hidden>
-                <button class="upload-btn" onclick="document.getElementById('pdfUpload').click()">
-                    Upload PDF
-                </button>
-                <button class="upload-btn secondary" onclick="uploadPDF()">
-                    Process
-                </button>
+      <!-- PaperMind logo -->
+      <svg
+        class="brand-logo"
+        viewBox="0 0 64 64"
+        aria-label="PaperMind logo"
+        role="img"
+      >
 
-                <select id="level">
-                    <option value="10 year old">10 Year Old</option>
-                    <option value="college student">College Student</option>
-                    <option value="researcher">Researcher</option>
-                </select>
-            </div>
+        <!-- Paper -->
+        <path
+          d="M14 5h27l14 14v40H14V5z"
+          fill="#F4EFE3"
+          stroke="#F4EFE3"
+          stroke-width="2"
+          stroke-linejoin="round"
+        />
 
-            <div class="input-row">
-                <input type="text" id="question" placeholder="Ask about the paper...">
-                <button class="send-btn" onclick="sendMessage()">➤</button>
-            </div>
+        <!-- Fold -->
+        <path
+          d="M41 5v14h14"
+          fill="none"
+          stroke="#6B6B6B"
+          stroke-width="2"
+        />
 
-        </div>
+        <!-- Paper text lines -->
+        <path
+          d="M23 27h23M23 34h18"
+          stroke="#1F1F1F"
+          stroke-width="3"
+          stroke-linecap="round"
+        />
+
+        <!-- Gold bookmark -->
+        <path
+          d="M25 42h12v17l-6-4-6 4V42z"
+          fill="#C89432"
+        />
+
+      </svg>
+
+      <!-- Wordmark -->
+      <span class="brand-name">
+        Paper<span class="brand-accent">Mind</span>
+      </span>
 
     </div>
 
+
+    <!-- ================= NEW CHAT ================= -->
+
+    <button
+      class="new-chat-btn"
+      id="newChatBtn"
+      type="button"
+    >
+
+      <svg
+        width="15"
+        height="15"
+        viewBox="0 0 15 15"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path
+          d="M7.5 1v13M1 7.5h13"
+          stroke="currentColor"
+          stroke-width="1.4"
+          stroke-linecap="round"
+        />
+      </svg>
+
+      New conversation
+
+    </button>
+
+
+    <!-- =================================================
+         DOCUMENT
+         ================================================= -->
+
+    <div class="sidebar-section">
+
+      <p class="sidebar-label">
+        Document
+      </p>
+
+
+      <!-- PDF Upload -->
+      <div
+        class="upload-zone"
+        id="uploadZone"
+        role="button"
+        tabindex="0"
+        aria-label="Upload PDF"
+      >
+
+        <input
+          type="file"
+          id="pdfUpload"
+          accept="application/pdf"
+          hidden
+        >
+
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M12 3v12m0 0-4-4m4 4 4-4M5 21h14"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+
+        <p class="upload-zone-text">
+          <strong>Drop a PDF</strong>
+          or click to browse
+        </p>
+
+        <p
+          class="upload-zone-file"
+          id="uploadFileName"
+        >
+          No file selected
+        </p>
+
+      </div>
+
+
+      <!-- Process -->
+      <button
+        class="process-btn"
+        id="processBtn"
+        type="button"
+        disabled
+      >
+        Process document
+      </button>
+
+
+      <!-- Document status -->
+      <div
+        class="doc-status"
+        id="docStatus"
+      >
+
+        <span class="status-dot"></span>
+
+        <span id="docStatusText">
+          No document loaded
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- =================================================
+         PREVIOUS PAPERS
+         ================================================= -->
+
+    <div class="previous-papers">
+
+      <p class="section-title">
+        Previous papers
+      </p>
+
+      <div
+        id="papersList"
+        class="papers-list"
+      >
+
+        <p class="papers-loading">
+          Loading papers...
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- =================================================
+         EXPLANATION LEVEL
+         ================================================= -->
+
+    <div class="sidebar-section">
+
+      <p class="sidebar-label">
+        Explanation level
+      </p>
+
+      <div
+        class="pill-group"
+        id="levelGroup"
+        data-value="college student"
+      >
+
+        <button
+          type="button"
+          class="pill"
+          data-level="10 year old"
+        >
+          Simple
+        </button>
+
+        <button
+          type="button"
+          class="pill active"
+          data-level="college student"
+        >
+          Student
+        </button>
+
+        <button
+          type="button"
+          class="pill"
+          data-level="researcher"
+        >
+          Expert
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- =================================================
+         MODE
+         ================================================= -->
+
+    <div class="sidebar-section">
+
+      <p class="sidebar-label">
+        Mode
+      </p>
+
+      <div
+        class="pill-group"
+        id="modeGroup"
+        data-value="normal"
+      >
+
+        <button
+          type="button"
+          class="pill active"
+          data-mode="normal"
+        >
+          Normal
+        </button>
+
+        <button
+          type="button"
+          class="pill"
+          data-mode="equation"
+        >
+          Equations
+        </button>
+
+        <button
+          type="button"
+          class="pill"
+          data-mode="analysis"
+        >
+          Analysis
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- =================================================
+         SIDEBAR FOOTER
+         ================================================= -->
+
+    <div class="sidebar-footer">
+
+      <p>
+        Reads &amp; explains research papers with cited,
+        structured answers.
+      </p>
+
+    </div>
+
+  </aside>
+
+
+  <!-- =====================================================
+       MAIN APPLICATION
+       ===================================================== -->
+
+  <main class="main">
+
+
+    <!-- ================= TOPBAR ================= -->
+
+    <header class="topbar">
+
+      <button
+        class="sidebar-toggle"
+        id="sidebarToggle"
+        type="button"
+        aria-label="Toggle sidebar"
+      >
+
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 18 18"
+          fill="none"
+          aria-hidden="true"
+        >
+
+          <path
+            d="M2 4.5h14M2 9h14M2 13.5h14"
+            stroke="currentColor"
+            stroke-width="1.4"
+            stroke-linecap="round"
+          />
+
+        </svg>
+
+      </button>
+
+
+      <!-- Current paper -->
+      <div class="topbar-title">
+
+        <span id="topbarDocName">
+          Untitled session
+        </span>
+
+      </div>
+
+
+      <!-- Current explanation level -->
+      <div class="topbar-meta">
+
+        <span id="topbarLevel">
+          Student level
+        </span>
+
+      </div>
+
+    </header>
+
+
+    <!-- =================================================
+         CHAT AREA
+         ================================================= -->
+
+    <div
+      class="chat-scroll"
+      id="chatBox"
+    >
+
+
+      <!-- Empty state -->
+      <div
+        class="empty-state"
+        id="emptyState"
+      >
+
+        <h1>
+          Explain any paper, at any level.
+        </h1>
+
+        <p>
+          Upload a PDF in the sidebar, then ask a question —
+          PaperMind retrieves the relevant passages and answers
+          with cited, structured explanations.
+        </p>
+
+
+        <!-- Suggested questions -->
+        <div class="suggestion-row">
+
+          <button
+            class="suggestion-chip"
+            data-suggest="What is the main contribution of this paper?"
+            type="button"
+          >
+            Main contribution
+          </button>
+
+          <button
+            class="suggestion-chip"
+            data-suggest="Summarize the methodology in simple terms."
+            type="button"
+          >
+            Summarize methodology
+          </button>
+
+          <button
+            class="suggestion-chip"
+            data-suggest="Explain the key equations step by step."
+            type="button"
+          >
+            Explain equations
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- =================================================
+         QUESTION COMPOSER
+         ================================================= -->
+
+    <div class="composer-wrap">
+
+      <div class="composer">
+
+        <textarea
+          id="question"
+          placeholder="Ask about the paper…"
+          rows="1"
+          aria-label="Ask a question about the paper"
+        ></textarea>
+
+
+        <button
+          class="send-btn"
+          id="sendBtn"
+          type="button"
+          aria-label="Send question"
+        >
+
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            aria-hidden="true"
+          >
+
+            <path
+              d="M8 13V3M8 3 3 8M8 3l5 5"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+
+          </svg>
+
+        </button>
+
+      </div>
+
+
+      <p class="composer-hint">
+        PaperMind answers only from the uploaded document and
+        may say “Not available in document.”
+      </p>
+
+    </div>
+
+  </main>
+
 </div>
 
+
+<!-- =====================================================
+     JAVASCRIPT
+     ===================================================== -->
+
 <script src="/static/script.js"></script>
+
 </body>
 </html>
