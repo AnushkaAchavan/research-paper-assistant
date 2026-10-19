@@ -3,8 +3,12 @@ uvicorn
 pymupdf
 faiss-cpu
 sentence-transformers
-google-generativeai
 python-multipart
 rank-bm25
 numpy
+openai
+pyodbc
+python-dotenv
+bcrypt
+PyJWT
 

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Log in — PaperMind</title>
+  <link rel="stylesheet" href="/static/auth.css">
+</head>
+<body>
+  <main class="auth-page">
+    <section class="auth-card" aria-labelledby="auth-title">
+      <a class="auth-brand" href="/login">Paper<span>Mind</span></a>
+      <h1 id="auth-title">Welcome back</h1>
+      <p class="auth-subtitle">Log in to access your research papers.</p>
+      <form id="authForm" novalidate>
+        <label for="email">Email</label>
+        <input id="email" type="email" autocomplete="email" required>
+        <label for="password">Password</label>
+        <input id="password" type="password" autocomplete="current-password" required>
+        <p id="authError" class="auth-error" role="alert" hidden></p>
+        <button id="authSubmit" type="submit">Log in</button>
+      </form>
+      <p class="auth-switch">New to PaperMind? <a href="/signup">Create an account</a></p>
+    </section>
+  </main>
+  <script src="/static/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Create account — PaperMind</title>
+  <link rel="stylesheet" href="/static/auth.css">
+</head>
+<body>
+  <main class="auth-page">
+    <section class="auth-card" aria-labelledby="auth-title">
+      <a class="auth-brand" href="/login">Paper<span>Mind</span></a>
+      <h1 id="auth-title">Create your account</h1>
+      <p class="auth-subtitle">Save and discuss your research papers securely.</p>
+      <form id="authForm" data-mode="signup" novalidate>
+        <label for="name">Name</label>
+        <input id="name" type="text" autocomplete="name" maxlength="100" required>
+        <label for="email">Email</label>
+        <input id="email" type="email" autocomplete="email" required>
+        <label for="password">Password</label>
+        <input id="password" type="password" autocomplete="new-password" minlength="8" required>
+        <p id="authError" class="auth-error" role="alert" hidden></p>
+        <button id="authSubmit" type="submit">Create account</button>
+      </form>
+      <p class="auth-switch">Already have an account? <a href="/login">Log in</a></p>
+    </section>
+  </main>
+  <script src="/static/auth.js"></script>
+</body>
+</html>
