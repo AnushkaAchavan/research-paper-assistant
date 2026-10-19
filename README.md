@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/banner.svg" alt="PaperMind: AI Research Paper Explainer" width="100%">
+<img src="banner.svg" alt="PaperMind: AI Research Paper Explainer" width="100%">
 
 <br>
 
